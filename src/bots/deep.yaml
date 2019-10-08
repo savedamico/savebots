@@ -1,0 +1,11 @@
+name: deep
+size: 20 # 5-30
+speed: 10 # 1-20
+color: # html code
+  R: 0
+  G: 0
+  B: 255
+start_position: 
+  x: 300 # 0-600
+  y: 300 # 0-400
+core: bot2 # Robot class

@@ -1,0 +1,12 @@
+name: sword
+size: 10 # 5-30
+speed: 10 # 1-20
+color: # html code
+  R: 100
+  G: 153
+  B: 100
+start_position: 
+  x: 300 # 0-600
+  y: 300 # 0-400
+core: bot3 # Robot class
+
