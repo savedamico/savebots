@@ -153,10 +153,10 @@ The new class must have the same methods as the default class (clearly new metho
             def weapon(self):
                   ...
 
-            def display(self, screen):
+            def display(self, ...):
                   ...
 
-            def move(self, bot=None):
+            def move(self, ...):
                   ...
 
             def remove(self):
