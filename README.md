@@ -12,7 +12,7 @@ Thats the project structure:
    * [elements/](#src/elements)
       * [core.py](#src/core.py)
       * [lasers.py](#src/lasers.py)
-   * [robots/](#src/robots)
+   * [bots/](#src/bots)
       * yaml file for bots configuration
    * [utils/](#src/utils)
       * [check.py](#src/utils/check.py)
