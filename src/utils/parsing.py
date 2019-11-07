@@ -11,7 +11,8 @@ PATH_ROBOT_CONFIG = os.path.join("bots","*.yaml")
 robot_type = {
     "bot1" : Default,
     "bot2": Bot1,
-    "bot3": BotSeek
+    "bot3": BotSeek,
+    "RL": ReinforcmentLearning
 }
 
 def create_bots():

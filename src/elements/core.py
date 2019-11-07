@@ -4,6 +4,9 @@ import random
 
 from .lasers import *
 
+SENSOR_LENGTH = 70
+
+
 (width, height) = (600, 400)
 COLOR_RED = (255, 51, 0)
 COLOR_BLACK = (0,0,0)
@@ -220,3 +223,124 @@ def addVectors(xxx_todo_changeme1, xxx_todo_changeme2):
     angle = 0.5 * math.pi - math.atan2(y, x)
     length  = math.hypot(x, y)
     return (angle, length)
+
+
+class ReinforcmentLearning():
+
+    def __init__(self, position, size, color, name, speed):
+        self.name = name
+        self.x = position[0]
+        self.y = position[1]
+        self.size = size
+        self.color = color
+        self.thickness = size
+        #self.speed = random.choice([speed*0.2,speed*0.8])
+        self.speed = speed * 0.8
+        self.angle = 1
+        self.hitbox = (self.x + 17, self.y + 2, 31, 57)
+        self.health = 10
+        self.visible = True
+        self.projectile = None
+
+        # sensors
+        self.first_x = self.x + (self.size + SENSOR_LENGTH) * math.sin(self.angle)
+        self.first_y = self.y - (self.size + SENSOR_LENGTH) * math.cos(self.angle)
+
+        self.second_x = self.x + (self.size + SENSOR_LENGTH) * math.sin(self.angle + 0.5)
+        self.second_y = self.y - (self.size + SENSOR_LENGTH) * math.cos(self.angle + 0.5)
+
+        self.third_x = self.x + (self.size + SENSOR_LENGTH) * math.sin(self.angle - 0.5)
+        self.third_y = self.y - (self.size + SENSOR_LENGTH) * math.cos(self.angle - 0.5)
+
+    # Select weapon.
+    def weapon(self):
+        self.projectile = Laser(self.x, self.y, size_robot=self.size, color=COLOR_RED, size=2, angle_robot=self.angle)
+        return self.projectile
+
+    # Bot apparence.
+    def display(self, screen):
+        # robot
+        pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.size, self.thickness)
+        pygame.draw.circle(screen, (50,50,50), (int(self.x + self.size * math.sin(self.angle)), int(self.y - self.size * math.cos(self.angle))), int(self.size*0.3), int(self.size*0.3))
+        # health bar
+        pygame.draw.rect(screen, (255,0,0), (self.hitbox[0], self.hitbox[1] - 20, 50, 10))
+        pygame.draw.rect(screen, (0,128,0), (self.hitbox[0], self.hitbox[1] - 20, 50 - (5 * (10 - self.health)), 10))
+        self.hitbox = (self.x + 17, self.y + 2, 31, 57)
+        # name
+        textsurface = myfont.render(self.name, False, COLOR_WHITE)
+        screen.blit(textsurface,(self.x + 17, self.y + 2,))
+
+        # sensors
+        pygame.draw.circle(screen, COLOR_WHITE, (int(self.first_x), int(self.first_y)), int(self.size*0.3), int(self.size*0.3))
+        pygame.draw.circle(screen, COLOR_WHITE, (int(self.second_x), int(self.second_y)), int(self.size*0.3), int(self.size*0.3))
+        pygame.draw.circle(screen, COLOR_WHITE, (int(self.third_x), int(self.third_y)), int(self.size*0.3), int(self.size*0.3))
+
+
+    # Moving engine.
+    def move(self, bot=None):
+        (self.angle, self.speed) = addVectors((self.angle, self.speed), gravity)
+        self.x += math.sin(self.angle) * self.speed
+        self.y -= math.cos(self.angle) * self.speed
+        self.angle += random.choice([0.2,-0.2])
+
+        # update sensors positions
+        self.first_x = self.x + (self.size + SENSOR_LENGTH) * math.sin(self.angle)
+        self.first_y = self.y - (self.size + SENSOR_LENGTH) * math.cos(self.angle)
+
+        self.second_x = self.x + (self.size + SENSOR_LENGTH) * math.sin(self.angle + 0.5)
+        self.second_y = self.y - (self.size + SENSOR_LENGTH) * math.cos(self.angle + 0.5)
+
+        self.third_x = self.x + (self.size + SENSOR_LENGTH) * math.sin(self.angle - 0.5)
+        self.third_y = self.y - (self.size + SENSOR_LENGTH) * math.cos(self.angle - 0.5)
+
+        if self.x > width - self.size:
+            self.x = 2*(width - self.size) - self.x
+            self.angle = - self.angle
+            self.speed *= elasticity
+        elif self.x < self.size:
+            self.x = 2*self.size - self.x
+            self.angle = - self.angle
+            self.speed *= elasticity
+        if self.y > height - self.size:
+            self.y = 2*(height - self.size) - self.y
+            self.angle = math.pi - self.angle
+            self.speed *= elasticity
+        elif self.y < self.size:
+            self.y = 2*self.size - self.y
+            self.angle = math.pi - self.angle
+            self.speed *= elasticity
+
+    
+        if self.first_x > width - self.size:
+            print('S1 fuori')
+        elif self.first_x < self.size:
+            print('S1 fuori')
+        if self.first_y > height - self.size:
+            print('S1 fuori')
+        elif self.first_y < self.size:
+            print('S1 fuori')
+
+        if self.second_x > width - self.size:
+            print('S2 fuori')
+        elif self.second_x < self.size:
+            print('S2 fuori')
+        if self.second_y > height - self.size:
+            print('S2 fuori')
+        elif self.second_y < self.size:
+            print('S2 fuori')
+
+        if self.third_x > width - self.size:
+            print('S3 fuori')
+            quit()
+        elif self.third_x < self.size:
+            print('S3 fuori')
+            quit()
+        if self.third_y > height - self.size:
+            print('S3 fuori')
+        elif self.third_y < self.size:
+            print('S3 fuori')
+
+
+    # Remove bot.
+    def remove(self):
+        self.visible = False
