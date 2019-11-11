@@ -26,6 +26,7 @@ def frame_learn(bot_RL, bots, projectiles):
                 for bot2 in bots[i+1:]: # menage collisions between bots.
                     collide(bot, bot2)
                     bot2.move(bot)
+
                 bot.display(screen)
                 projectile = bot.weapon() # create projectile if bot shooting
                 projectiles.append(bot.projectile)
@@ -33,6 +34,11 @@ def frame_learn(bot_RL, bots, projectiles):
                 #print('KILL ' + bot.name)
                 bot.remove()
                 bots.remove(bot)
+            
+            if bot.name is not "RL":
+                bot_RL.enemies_health = bot.health
+                bot_RL.enemies_x = bot.x
+                bot_RL.enemies_y = bot.y
             #print(str(bot.name) + ' ' + str(bot.health))
     
     # Projectile visualization.

@@ -6,19 +6,19 @@ import math
 import random
 
 # def neural_net(self, weights=None):
-#     # model = Sequential()
-#     # model.add(Dense(output_dim=120, activation='relu', input_dim=6))
-#     # model.add(Dropout(0.15))
-#     # model.add(Dense(output_dim=120, activation='relu'))
-#     # model.add(Dropout(0.15))
-#     # model.add(Dense(output_dim=120, activation='relu'))
-#     # model.add(Dropout(0.15))
-#     # model.add(Dense(output_dim=4, activation='softmax'))
-#     # opt = Adam(self.learning_rate)
-#     # model.compile(loss='mse', optimizer=opt)
+#     model = Sequential()
+#     model.add(Dense(output_dim=120, activation='relu', input_dim=6))
+#     model.add(Dropout(0.15))
+#     model.add(Dense(output_dim=120, activation='relu'))
+#     model.add(Dropout(0.15))
+#     model.add(Dense(output_dim=120, activation='relu'))
+#     model.add(Dropout(0.15))
+#     model.add(Dense(output_dim=4, activation='softmax'))
+#     opt = Adam(self.learning_rate)
+#     model.compile(loss='mse', optimizer=opt)
 
-#     # if weights:
-#     #     model.load_weights(weights)
+#     if weights:
+#         model.load_weights(weights)
 #     return model
 
 def neural_mock(state,angle,speed):
