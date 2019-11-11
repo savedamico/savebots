@@ -12,7 +12,7 @@ robot_type = {
     "bot1" : Default,
     "bot2": Bot1,
     "bot3": BotSeek,
-    "RL": ReinforcmentLearning
+    "RL": ReinforcmentLearning_LEARN
 }
 
 def create_bots():

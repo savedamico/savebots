@@ -12,7 +12,7 @@ class Laser(object):
         self.size = size
         self.color = color
         self.size_robot = size_robot
-        self.speed = 7
+        self.speed = 10
         self.visible = True
         self.angle_robot = angle_robot
 

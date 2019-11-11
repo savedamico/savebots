@@ -7,11 +7,13 @@ Saverio D'Amico
 '''
 
 import pygame
-from actions import frame
+import sys
+from actions import frame, frame_learn
+from utils.parsing import create_bots
 
 (width, height) = (600, 400)
 DARK_GREY_COLOR = (30,30,30)
-CLOCK_TICK = 20
+CLOCK_TICK = 300
 TITLE = "SAVEBOTS"
 
 pygame.init()
@@ -21,12 +23,35 @@ pygame.display.set_caption(TITLE)
 background_colour = DARK_GREY_COLOR
 clock = pygame.time.Clock()
 
-running = True
-while running:
-    screen.fill(background_colour)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    frame()
-    clock.tick(CLOCK_TICK)
-    pygame.display.update()
+# Load bots
+def init():
+    projectiles = []
+    bots=[]
+    # init bots
+    bots = create_bots()
+    for bot in bots:
+        print(bot.name)
+        if bot.name == "RL": 
+            bot_RL = bot 
+    return bot_RL, bots, projectiles
+
+# Main func.
+def main():
+    running = True
+    bot_RL, bots, projectiles = init()
+    while running:
+        screen.fill(background_colour)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.display.quit()
+                pygame.quit()
+                running = False
+                quit()
+        restart = frame_learn(bot_RL, bots, projectiles) 
+        if restart: running = False
+        clock.tick(CLOCK_TICK)
+        pygame.display.update()
+    
+if __name__ == "__main__":
+    while True:
+        main()

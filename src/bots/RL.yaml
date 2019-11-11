@@ -1,6 +1,6 @@
-name: _RL_
+name: RL
 size: 10 # 5-30
-speed: 10 # 1-20
+speed: 5 # 1-20
 color: # html code
   R: 55
   G: 55

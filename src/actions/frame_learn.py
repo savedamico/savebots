@@ -5,26 +5,23 @@ from actions import collide, shooting
 
 (width, height) = (600, 400)
 
+
 pygame.font.init() 
 screen = pygame.display.set_mode((width, height))
 myfont = pygame.font.SysFont('Times new roman', 30)
 
-projectiles = []
-bots=[]
 
-# init bots
-bots = create_bots()
 
-def frame():
+def frame_learn(bot_RL, bots, projectiles):
+
     # Bots visualization.
     for i, bot in enumerate(bots):
         if len(bots) is 1: # remaing one bot.
-            bot.display(screen)
-            bot.move()
-            textsurface = myfont.render((bot.name.upper()+" WIN!"), False, (255, 255, 255))
-            screen.blit(textsurface, ((width-120)/2, height/2))
+            return True
         else:
             if bot.visible is True:
+                state = bot_RL.get_state()
+                actions = bot_RL.predict_new_actions()
                 bot.move()
                 for bot2 in bots[i+1:]: # menage collisions between bots.
                     collide(bot, bot2)
@@ -33,12 +30,11 @@ def frame():
                 projectile = bot.weapon() # create projectile if bot shooting
                 projectiles.append(bot.projectile)
             if bot.health < 0: # remove death bot from arena.
-                print('KILL ' + bot.name)
+                #print('KILL ' + bot.name)
                 bot.remove()
                 bots.remove(bot)
-            print(str(bot.name) + ' ' + str(bot.health))
-    print()
-
+            #print(str(bot.name) + ' ' + str(bot.health))
+    
     # Projectile visualization.
     for projectile in projectiles:
         if projectile:
@@ -47,4 +43,10 @@ def frame():
                     projectile.move()
                     shooting(bot,projectile,screen)
                     projectile.draw(screen)
-    return
+
+    # state = bot_RL.get_state()
+    # bot_RL.predict_new_actions()
+    print(state, actions)
+    return False
+
+
