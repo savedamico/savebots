@@ -4,7 +4,7 @@ import random
 import numpy as np
 
 from .ai import neural_mock
-# from .ai import neural_net
+from .ai import neural_net
 
 from .lasers import *
 
@@ -417,9 +417,9 @@ class ReinforcmentLearning_LEARN():
         # self.old_state = self.state
 
 
-        self.enemies_x = None 
-        self.enemies_y = None
-        self.enemies_health = None 
+        self.enemies_x = 0 
+        self.enemies_y = 0
+        self.enemies_health = 0 
 
         move_x = math.sin(self.angle) * self.speed
         move_y = math.cos(self.angle) * self.speed
@@ -463,9 +463,16 @@ class ReinforcmentLearning_LEARN():
         return np.asarray(self.state)
 
     def predict_new_actions(self):
-        # self.actions = neural_net(self.state)
-        self.actions = neural_mock(self.state, self.angle, self.speed)
-        return np.asarray(self.actions)
+        #model = neural_net()
+        #res_sate = np.asarray(self.state).reshape((1,8))
+        #predicted_actions = model.predict(res_sate)
+        #self.actions = predicted_actions[0]
+        
+        actionseee = neural_mock(self.state, self.angle, self.speed)
+        print("*******************")
+        #print(res_sate)
+        #print(self.actions)
+        return np.asarray(actionseee)
 
     # Set reward.
     def set_reward(self):

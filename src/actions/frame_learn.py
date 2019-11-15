@@ -35,6 +35,7 @@ def frame_learn(bot_RL, bots, projectiles):
                 bot.remove()
                 bots.remove(bot)
             
+            # aggiorna parametri del nemico
             if bot.name is not "RL":
                 bot_RL.enemies_health = bot.health
                 bot_RL.enemies_x = bot.x

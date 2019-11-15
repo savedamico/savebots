@@ -6,6 +6,6 @@ color: # html code
   G: 55
   B: 55
 start_position: 
-  x: 100 # 0-600
-  y: 200 # 0-400
+  x: 400 # 0-600
+  y: 350 # 0-400
 core: RL # Robot class

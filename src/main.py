@@ -13,7 +13,7 @@ from utils.parsing import create_bots
 
 (width, height) = (600, 400)
 DARK_GREY_COLOR = (30,30,30)
-CLOCK_TICK = 30
+CLOCK_TICK = 3000
 TITLE = "SAVEBOTS"
 
 pygame.init()
