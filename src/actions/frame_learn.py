@@ -11,7 +11,6 @@ screen = pygame.display.set_mode((width, height))
 myfont = pygame.font.SysFont('Times new roman', 30)
 
 
-
 def frame_learn(bot_RL, bots, projectiles):
 
     # Bots visualization.
@@ -30,6 +29,7 @@ def frame_learn(bot_RL, bots, projectiles):
                 bot.display(screen)
                 projectile = bot.weapon() # create projectile if bot shooting
                 projectiles.append(bot.projectile)
+            
             if bot.health < 0: # remove death bot from arena.
                 #print('KILL ' + bot.name)
                 bot.remove()
@@ -53,7 +53,7 @@ def frame_learn(bot_RL, bots, projectiles):
 
     # state = bot_RL.get_state()
     # bot_RL.predict_new_actions()
-    print(state, actions)
+    #print(state, actions)
     return False
 
 

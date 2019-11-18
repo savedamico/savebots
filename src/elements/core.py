@@ -430,6 +430,7 @@ class ReinforcmentLearning_LEARN():
 
         # self.actions = init_actions()
         self.state = None
+        self.model = neural_net()
 
     # Init Neural Net
     # def network(self):
@@ -454,7 +455,8 @@ class ReinforcmentLearning_LEARN():
                 self.x,
                 self.y,
                 self.angle,
-                self.actions[3],
+                self.speed,
+                self.actions[1],
                 self.health,
                 self.enemies_x,
                 self.enemies_y,
@@ -463,16 +465,15 @@ class ReinforcmentLearning_LEARN():
         return np.asarray(self.state)
 
     def predict_new_actions(self):
-        #model = neural_net()
-        #res_sate = np.asarray(self.state).reshape((1,8))
-        #predicted_actions = model.predict(res_sate)
-        #self.actions = predicted_actions[0]
+        res_sate = np.asarray(self.state).reshape((1,9))
+        predicted_actions = self.model.predict(res_sate)
+        self.actions = predicted_actions[0]
+        #self.actions = neural_mock(self.state, self.angle, self.speed)
         
-        actionseee = neural_mock(self.state, self.angle, self.speed)
-        print("*******************")
-        #print(res_sate)
-        #print(self.actions)
-        return np.asarray(actionseee)
+        # print("------------------------------------------------------")
+        # print("Input array:",self.state)
+        # print("Output array:",self.actions)
+        return np.asarray(self.actions)
 
     # Set reward.
     def set_reward(self):
@@ -493,7 +494,7 @@ class ReinforcmentLearning_LEARN():
     # Select weapon.
     def weapon(self):
         # random_shoot = random.choice([True, False])
-        if self.actions[3]:
+        if self.actions[1]:
             self.projectile = Laser(self.x, self.y, size_robot=self.size, color=COLOR_RED, size=2, angle_robot=self.angle)
             return self.projectile
         else:
@@ -521,13 +522,13 @@ class ReinforcmentLearning_LEARN():
     def move(self, bot=None):
         (self.angle, self.speed) = addVectors((self.angle, self.speed), gravity)
         
-        # move_x = math.sin(self.angle) * self.speed
-        # move_y = math.cos(self.angle) * self.speed
-        # move_angle = random.choice([0.2,-0.2])
+        move_x = math.sin(self.angle) * self.speed
+        move_y = math.cos(self.angle) * self.speed
+        move_angle = self.actions[0]
 
-        self.x += self.actions[0] # model.predict()
-        self.y -= self.actions[1] 
-        self.angle += self.actions[2] 
+        self.x += move_x # model.predict()
+        self.y -= move_y
+        self.angle += move_angle
 
         # update sensors positions
         self.first_x = self.x + (self.size + SENSOR_LENGTH) * math.sin(self.angle)
